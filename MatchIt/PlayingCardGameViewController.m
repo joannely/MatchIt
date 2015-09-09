@@ -19,4 +19,16 @@
     return [[PlayingCardDeck alloc] init];
 }
 
+- (NSAttributedString *)titleForCard:(Card *)card {
+    return card.isChosen ? [[NSAttributedString alloc] initWithString:card.contents] : [[NSAttributedString alloc] initWithString:@""];
+}
+
+- (UIImage *)backgroundImageForCard:(Card *)card {
+    return [UIImage imageNamed:card.isChosen ? @"cardfront" : @"cardback"];
+}
+
+- (int)getMatchNumber {
+    return 2;
+}
+
 @end

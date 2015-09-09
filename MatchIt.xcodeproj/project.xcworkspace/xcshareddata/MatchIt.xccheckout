@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C159F8D1-8CBB-4DB5-BD49-13FE122E0834</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MatchIt</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>EA04F4E89AD66F280AC2D35A24ECD6285C034144</key>
+		<string>https://github.com/joannely/MatchIt.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MatchIt.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>EA04F4E89AD66F280AC2D35A24ECD6285C034144</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/joannely/MatchIt.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>EA04F4E89AD66F280AC2D35A24ECD6285C034144</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EA04F4E89AD66F280AC2D35A24ECD6285C034144</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MatchIt</string>
+		</dict>
+	</array>
+</dict>
+</plist>

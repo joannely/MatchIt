@@ -13,7 +13,6 @@
 @property (nonatomic, readwrite) NSInteger score;
 @property (nonatomic, strong) NSMutableArray *cards;
 @property (nonatomic, strong) NSMutableArray *chosenCards;
-@property (nonatomic) NSInteger scoreDifference;
 @property (nonatomic) int matchScore;
 
 @end

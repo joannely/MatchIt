@@ -9,12 +9,21 @@
 
 #import <UIKit/UIKit.h>
 #import "Deck.h"
+#import "CardMatchingGame.h"
 
 @interface ViewController : UIViewController
 
 // protected
 // for subclasses
 - (Deck *)createDeck;
+- (NSAttributedString *)titleForCard:(Card *)card;
+- (UIImage *)backgroundImageForCard:(Card *)card;
+- (int)getMatchNumber;
+
+
+@property (strong, nonatomic, readonly) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (strong, nonatomic) CardMatchingGame *game;
+@property (strong, nonatomic, readonly) IBOutlet UILabel *scoreLabel;
 
 @end
 
