@@ -8,13 +8,13 @@
 
 #import "ViewController.h"
 #import "CardMatchingGame.h"
+#import "GameHistoryViewController.h"
 
 @interface ViewController ()
 
 @property (strong, nonatomic, readwrite) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic, readwrite) IBOutlet UILabel *scoreLabel;
-@property (strong, nonatomic) IBOutlet UILabel *statusLabel;
-@property (strong, nonatomic) IBOutlet UISlider *progressSlider;
+@property (strong, nonatomic, readwrite) IBOutlet UILabel *statusLabel;
 @property (strong, nonatomic) NSMutableArray *progress;
 
 @end
@@ -41,8 +41,26 @@
 
 - (int)getMatchNumber {
     return 0;
-
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"Show History"]) {
+        if ([segue.destinationViewController isKindOfClass:[GameHistoryViewController class]]) {
+            GameHistoryViewController *ghvc = (GameHistoryViewController *)segue.destinationViewController;
+            ghvc.historyContent = self.progress;
+        }
+    }
+}
+
+/*- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ if ([segue.identifier isEqualToString:@"Analyze Text"]) {
+ if ([segue.destinationViewController isKindOfClass:[TextStatsViewController class]]) {
+ TextStatsViewController *tsvc = (TextStatsViewController *)segue.destinationViewController;
+ tsvc.textToAnalyze = self.body.textStorage;
+ }
+ }
+ }
+ */
 
 - (IBAction)touchCardButton:(UIButton *)sender {
     int cardIndex = [self.cardButtons indexOfObject:sender];
@@ -51,25 +69,16 @@
 }
 
 - (IBAction)restartButton:(UIButton *)sender {
-    for (UIButton *cardButton in self.cardButtons) {
-        [cardButton setAttributedTitle:nil forState:UIControlStateNormal];
-        [cardButton setBackgroundImage:[UIImage imageNamed:@"cardback"] forState:UIControlStateNormal];
-        cardButton.enabled = YES;
-    }
     self.game = nil;
+    [self updateUI];
     self.progress = nil;
-    self.progressSlider.value = 1;
-    self.statusLabel.alpha = 1;
-    self.statusLabel.textColor = [UIColor blackColor];
     self.statusLabel.text = @"Select card to start";
 }
 
 
 - (void) updateUI {
-    [self.progress addObject:[self.game getStatusUpdate]];
-    self.statusLabel.text = self.progress[[self.progress count]-1];
-    self.progressSlider.value = 1;
-    [self changeProgressSlider:self.progressSlider];
+    [self.progress addObject:[self getStatusUpdate]];
+    [self.statusLabel setAttributedText:self.progress[[self.progress count]-1]];
     for (UIButton *cardButton in self.cardButtons) {
         int cardIndex = [self.cardButtons indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardIndex];
@@ -79,6 +88,12 @@
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score : %d", self.game.score];
 }
+
+- (NSAttributedString *)getStatusUpdate {
+    return nil;
+}
+
+/*
 
 - (IBAction)changeProgressSlider:(id)sender {
     UISlider *slider = (UISlider *)sender;
@@ -95,6 +110,7 @@
     }
 
 }
+ */
 
 
 - (NSAttributedString *)titleForCard:(Card *)card {

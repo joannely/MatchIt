@@ -12,8 +12,7 @@
 
 @property (nonatomic, readwrite) NSInteger score;
 @property (nonatomic, strong) NSMutableArray *cards;
-@property (nonatomic, strong) NSMutableArray *chosenCards;
-@property (nonatomic) int matchScore;
+@property (nonatomic, readwrite) int matchScore;
 
 @end
 
@@ -51,16 +50,7 @@
 - (void)addToChosenCards:(Card *)card {
     if (card) {
         [self.chosenCards addObject:card];
-    } /*else {
-        if (!self.matchScore) {
-            Card *oldCard = self.chosenCards[self.matchNumber-1];
-            self.chosenCards = nil;
-            [self.chosenCards addObject:oldCard];
-        } else {
-            self.chosenCards = nil;
-        }
     }
-       */
 }
 
 #define MISMATCH_PENALTY 2
@@ -106,40 +96,14 @@
          }
      } else {
          self.score -= MISMATCH_PENALTY;
+         self.matchScore -= MISMATCH_PENALTY;
          for (Card *card in cards) {
              card.chosen = NO;
          }
      }
 }
 
-- (NSString *)getStatusUpdate {
-    NSString *returnValue = [[NSString alloc] init];
-    int count = [self.chosenCards count];
-    
-    if (count) {
-        for (Card *card in self.chosenCards) {
-            returnValue = [returnValue stringByAppendingString:card.contents];
-        }
-        
-        if (count == self.matchNumber && ![self.chosenCards[0] isMatched]) {
-            returnValue = [returnValue stringByAppendingString:[NSString stringWithFormat:@" did not match! %d point penalty. ", MISMATCH_PENALTY]];
-            Card *oldCard = self.chosenCards[self.matchNumber-1];
-            self.chosenCards = nil;
-            [self.chosenCards addObject:oldCard];
-            returnValue = [returnValue stringByAppendingString:oldCard.contents];
-        }
-        
-        if ([self.chosenCards[0] isMatched]) {
-            returnValue = [returnValue stringByAppendingString:[NSString stringWithFormat:@" matched for %d points", self.matchScore]];
-            self.chosenCards = nil;
-        } else {
-            returnValue = [returnValue stringByAppendingString:@" selected"];
-        }
-        return returnValue;
-    }
 
-    return @"";
-}
 
 - (Card *)cardAtIndex:(NSUInteger)index {
     return (index < [self.cards count]) ? self.cards[index] : nil;

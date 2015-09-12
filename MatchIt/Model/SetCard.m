@@ -48,7 +48,7 @@
     } else {
         [validShapes removeObject:self.shape];
         [validShapes removeObject:card1.shape];
-        if (![validNumbers containsObject:card2.shape]) return score;
+        if (![validShapes containsObject:card2.shape]) return score;
     }
     
     if ([self.color isEqualToString:card1.color]) {

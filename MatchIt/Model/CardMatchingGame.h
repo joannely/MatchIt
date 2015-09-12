@@ -18,12 +18,16 @@
 - (Card *)cardAtIndex:(NSUInteger)index;
 
 @property (nonatomic, readonly) NSInteger score;
+@property (nonatomic, readonly) int matchScore;
+@property (nonatomic, strong) NSMutableArray *chosenCards;
+
 @property (nonatomic) NSUInteger matchNumber;
 
 
 - (void)matchCards:(NSMutableArray *)cards withCard:(Card *)card;
-- (NSString *)getStatusUpdate;
 - (void)addToChosenCards:(Card *)card;
+
+
 
 
 @end

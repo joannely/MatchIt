@@ -23,7 +23,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self updateUI];
+    for (UIButton *cardButton in super.cardButtons) {
+        int cardIndex = [super.cardButtons indexOfObject:cardButton];
+        Card *card = [super.game cardAtIndex:cardIndex];
+        [cardButton setAttributedTitle:[self titleForCard:card] forState:UIControlStateNormal];
+        [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
+        cardButton.enabled = !card.isMatched;
+        
+    }
+    
+   // [self restartButton:nil];
 }
 
 - (NSAttributedString *)titleForCard:(Card *)card {
@@ -47,7 +56,6 @@
         outlineColor = [UIColor colorWithRed:255/255.0 green:111/255.0 blue:207/255.0 alpha:1];
     }
     
-    //return [[NSAttributedString alloc] initWithString:returnStr];
     
     NSAttributedString *returnVal;
     if ([newCard.style isEqualToString:@"solid"]) {
@@ -66,7 +74,21 @@
     
 }
 
-- (void) updateUI {
+
+/*
+- (IBAction)restartButton:(UIButton *)sender {
+    for (UIButton *cardButton in super.cardButtons) {
+        [cardButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@""] forState:UIControlStateNormal];
+        [cardButton setBackgroundImage:[UIImage imageNamed:@"cardfront"] forState:UIControlStateNormal];
+        cardButton.enabled = YES;
+    }
+    
+    self.game = nil;
+    
+    [self createDeck];
+    
+    
+    [self.statusLabel setAttributedText:[self getStatusUpdate]];
     for (UIButton *cardButton in super.cardButtons) {
         int cardIndex = [super.cardButtons indexOfObject:cardButton];
         Card *card = [super.game cardAtIndex:cardIndex];
@@ -76,21 +98,13 @@
         
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score : %d", self.game.score];
-}
+    
+    self.statusLabel.text = @"Select card to start";
+    self.statusLabel.textColor = [UIColor blackColor];
 
-- (IBAction)restartButton:(UIButton *)sender {
-    NSLog(@"hello");
-    for (UIButton *cardButton in super.cardButtons) {
-        [cardButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@""] forState:UIControlStateNormal];
-        [cardButton setBackgroundImage:[UIImage imageNamed:@"cardfront"] forState:UIControlStateNormal];
-        cardButton.enabled = YES;
-    }
-    
-    self.game = nil;
-    [self createDeck];
-    [self updateUI];
     
 }
+ */
 
 
 - (UIImage *)backgroundImageForCard:(Card *)card {
@@ -99,6 +113,35 @@
     } else {
         return [UIImage imageNamed:@"cardfront"];
     }
+}
+
+- (NSAttributedString *)getStatusUpdate {
+    NSMutableAttributedString *returnValue = [[NSMutableAttributedString alloc] init];
+    int count = [self.game.chosenCards count];
+    
+    if (count) {
+        for (Card *card in self.game.chosenCards) {
+            [returnValue appendAttributedString:[self titleForCard:card]];
+        }
+        
+        if (count == self.game.matchNumber && ![self.game.chosenCards[0] isMatched]) {
+            [returnValue appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" did not match! %d point penalty. ", self.game.matchScore]]];
+            Card *oldCard = self.game.chosenCards[self.game.matchNumber-1];
+            self.game.chosenCards = nil;
+            [self.game.chosenCards addObject:oldCard];
+            [returnValue appendAttributedString:[self titleForCard:oldCard]];
+        }
+        
+        if ([self.game.chosenCards[0] isMatched]) {
+            [returnValue appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" matched for %d points ", self.game.matchScore]]];
+            self.game.chosenCards = nil;
+        } else {
+            [returnValue appendAttributedString:[[NSAttributedString alloc] initWithString:@" selected"]];
+        }
+        return returnValue;
+    }
+    
+    return [[NSAttributedString alloc] initWithString:@""];
 }
 
 - (int)getMatchNumber {

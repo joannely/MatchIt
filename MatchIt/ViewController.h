@@ -19,11 +19,13 @@
 - (NSAttributedString *)titleForCard:(Card *)card;
 - (UIImage *)backgroundImageForCard:(Card *)card;
 - (int)getMatchNumber;
+- (NSAttributedString *)getStatusUpdate;
 
 
 @property (strong, nonatomic, readonly) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic, readonly) IBOutlet UILabel *scoreLabel;
+@property (strong, nonatomic, readonly) IBOutlet UILabel *statusLabel;
 
 @end
 
